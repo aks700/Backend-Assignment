@@ -1,0 +1,190 @@
+1) 
+db.products.aggregate([
+  {
+    $match: {
+      price: { $gte: 100 }
+    }
+  }
+])
+
+
+
+2) 
+db.products.aggregate([
+    {
+     $group:{
+         "_id":{"category":"$category"},
+         "total_cnt":{$sum:1}
+        }
+    }
+  
+])
+
+
+3)
+db.products.aggregate([
+    {
+     $group:{
+         "_id":{"category":"$category"},
+         "max_price":{$max:"$price"},
+         "min_price":{$min:"$price"}
+        }
+    }
+  
+])
+
+4)
+db.products.aggregate([
+    {
+     $sort:{"price":-1}
+    },
+    {
+      $limit:3
+    },
+    {
+      $project:{"_id":0,"name":1,"price":1}
+    }
+  
+])
+
+
+5)
+db.products.aggregate([
+    {
+      $group:{
+        "_id":{"supp_country":"$supplier.country"},
+        "avg_price":{$avg:"$price"}
+      }
+    }
+  
+])
+
+
+6)
+db.products.aggregate([
+  {
+    $match: {
+      stock: { $lte: 10 }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      count: { $sum: 1 }
+    }
+  }
+])
+
+7)
+db.products.aggregate([
+  {
+    $project: {
+      category: 1,
+      _id: 0,
+      totalPrice: { $multiply: ["$stock", "$price"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$category",
+      value: { $sum: "$totalPrice" }
+    }
+  }
+])
+
+8)
+db.products.aggregate([
+  {
+    $sort: {
+      "createdAt": -1
+    }
+  },
+  {
+    $limit: 5
+  }
+])
+
+9)
+db.products.aggregate([
+  {
+
+    $group:{
+        "_id":"$category",
+        "count":{$sum:1}
+    }
+  },
+  {
+    $match:{
+        count:{$gt:2}
+    }
+  }
+  
+])
+
+10)
+db.products.aggregate([
+  {
+    $project: {
+      category: 1,
+      _id: 0,
+      totalPrice: { $multiply: ["$stock", "$price"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$category",
+      value: { $sum: "$totalPrice" }
+    }
+  },
+  {
+    $sort:{"totalPrice":-1}
+  },
+  {
+    $limit:2
+  }
+])
+
+db.products.aggregate([
+  {
+    $project: {
+      category: 1,
+      _id: 0,
+      totalPrice: { $multiply: ["$stock", "$price"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$category",
+      value: { $sum: "$totalPrice" }
+    }
+  },
+  {
+    $sort:{"totalPrice":-1}
+  },
+  {
+    $limit:2
+  }
+])
+
+
+11)
+db.products.aggregate([
+    {
+        $unwind:"$ratings"
+    },
+  {
+    $group: {
+      _id: "$category",
+      avg_rating: {
+        $avg: "$ratings.score"
+      }
+    }
+  },
+  {
+    $sort: { avg_rating: -1 }
+  },
+  {
+    $limit: 1
+  }
+])
+
