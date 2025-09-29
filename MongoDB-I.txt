@@ -1,0 +1,103 @@
+db.food_item.insertMany([{"name":"Bhujia","calories(in kcal)":540,"brand":["Haldiram","BTW","Bikaner"],"category":["snack","meal"],"price(in Rs)":40},
+{"name":"Milk","calories(in kcal)":320,"brand":["Haldiram","Gulab"],"category":["juice","meal"],"price(in Rs)":20},
+{"name":"Sweets","calories(in kcal)":200,"brand":["Gulab","Bansal"],"category":["meal"],"price(in Rs)":70}])
+
+
+db.food_item.insertOne({"name":"Nuts","calories(in kcal)":200,"brand":["Haldiram","BTW","Bikaner","Gulab"],"category":["snack","meal"],"price(in Rs)":490})
+
+
+db.food_item.insertOne({"name":"Apple Juice","calories(in kcal)":220,"brand":["Bansal","BTW","Gulab"],"category":["juice"],"price(in Rs)":390})
+
+
+
+
+db.restaurant.insertMany([
+  {
+    "name": "Haldiram",
+    "year": 40,
+    "location": "Delhi",
+    "email": "haldirm.co.in",
+    "nos_of_days_open": 7,
+    "category": ["snack", "juice", "meal"],
+    "serving": ["Dining", "Delivery"],
+    "city": "New Delhi"
+  },
+  {
+    "name": "Bansal",
+    "year": 20,
+    "location": "Mumbai",
+    "email": "bansal.co.in",
+    "nos_of_days_open": 5,
+    "category": ["snack", "juice"],
+    "serving": ["TakeAway"],
+    "city": "Dharavi"
+  },
+  {
+    "name": "BTW",
+    "year": 21,
+    "location": "Delhi",
+    "email": "btw.co.in",
+    "nos_of_days_open": 6,
+    "category": ["snack", "juice", "meal"],
+    "serving": ["TakeAway", "Dining"],
+    "city": "Lajpat Nagar"
+  }
+])
+
+
+db.restaurant.insertOne( {
+    "name": "Gulab",
+    "year": 60,
+    "location": "Delhi",
+    "email": "gulab.co.in",
+    "nos_of_days_open": 7,
+    "category": ["snack", "juice", "meal"],
+    "serving": ["Dining", "Delivery","TakeAway"],
+    "city": "Rohini"
+  })
+
+
+db.restaurant.insertOne( {
+    "name": "Haldiram",
+    "year": 40,
+    "location": "Delhi",
+    "email": "haldiram.co.in",
+    "nos_of_days_open": 5,
+    "category": ["snack", "juice", "meal"],
+    "serving": ["Dining", "Delivery","TakeAway"],
+    "city": "Rohini"
+  })
+
+
+db.food_item.updateOne(
+  {
+    "category": { $in: ["snack"] }
+  },
+  {
+    $set: { "price(in Rs)": 10000 }
+  }
+)
+
+
+db.restaurant.updateOne(
+  {
+    "location": { $in: ["Delhi"] }
+  },
+  {
+    $set: { "location": "Chennai" }
+  }
+)
+
+db.food_item.deleteOne(
+  {
+    "brand": { $in: ["Haldiram"] }
+  }
+)
+
+db.food_item.deleteMany(
+  {
+    "category": { $in: ["juice"] }
+  }
+)
+
+
